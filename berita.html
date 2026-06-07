@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pusat Informasi & Berita - Rutan Kota Agung</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
+      }
+      .navbar {
+        background-color: #002855;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 22px;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .container {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+      .grid-berita {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+        margin-top: 20px;
+      }
+      .card-berita {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        border-top: 4px solid #002855;
+        transition: transform 0.2s;
+        cursor: pointer; /* 💡 Menandakan kartu bisa diklik */
+      }
+      .card-berita:hover {
+        transform: translateY(-5px);
+      }
+      .foto-berita {
+        width: 100%;
+        height: 210px;
+        object-fit: cover;
+        background-color: #eaeded;
+      }
+      .card-body {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 1;
+      }
+      .judul {
+        font-size: 19px;
+        font-weight: bold;
+        color: #222;
+        margin: 0 0 10px 0;
+        line-height: 1.4;
+      }
+      .tanggal {
+        font-size: 12px;
+        color: #777;
+        margin-bottom: 15px;
+        font-style: italic;
+      }
+      .isi {
+        font-size: 14.5px;
+        color: #444;
+        line-height: 1.6;
+        text-align: justify;
+        white-space: pre-line;
+        margin: 0;
+      }
+      .loading {
+        text-align: center;
+        color: #666;
+        font-size: 16px;
+        margin-top: 50px;
+      }
+      .btn-kembali {
+        background-color: #ffffff;
+        color: #002855 !important;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .btn-kembali:hover {
+        background-color: #f0f4f8;
+        transform: translateX(-3px);
+      }
+
+      /* ==========================================
+         ✨ STYLE BARU UNTUK POP-UP (MODAL) BERITA
+         ========================================== */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.75
+        ); /* Latar belakang hitam transparan */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        padding: 20px;
+      }
+      .modal-overlay.aktif {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .modal-konten {
+        background: white;
+        width: 100%;
+        max-width: 750px;
+        max-height: 85vh;
+        border-radius: 12px;
+        overflow-y: auto; /* Jika teks panjang bisa di-scroll ke bawah */
+        position: relative;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+        animation: meluncur 0.3s ease;
+      }
+      @keyframes meluncur {
+        from {
+          transform: translateY(30px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      .modal-tutup-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        font-weight: bold;
+        z-index: 10;
+      }
+      .modal-tutup-btn:hover {
+        background: rgba(220, 53, 69, 0.9); /* Berubah merah saat disorot */
+      }
+      .modal-foto {
+        width: 100%;
+        max-height: 400px;
+        object-fit: contain; /* Gambar diperbesar penuh tanpa terpotong */
+        background-color: #111;
+        display: block;
+      }
+      .modal-body {
+        padding: 30px;
+      }
+      .modal-judul {
+        font-size: 24px;
+        color: #002855;
+        margin-top: 0;
+        margin-bottom: 10px;
+        line-height: 1.4;
+      }
+      .modal-tanggal {
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+      }
+      .modal-isi {
+        font-size: 16px;
+        color: #333;
+        line-height: 1.8;
+        text-align: justify;
+        white-space: pre-line;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div
+        style="
+          max-width: 1100px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 20px;
+        "
+      >
+        <a href="index.html" class="btn-kembali">⬅️ Kembali Utama</a>
+        <div style="flex-grow: 1; text-align: center; margin-right: 120px">
+          📰 PUSAT INFORMASI & BERITA
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div id="loading-berita" class="loading">
+        ⏳ Memuat berita dan informasi terbaru...
+      </div>
+      <div class="grid-berita" id="konten-berita"></div>
+    </div>
+
+    <div class="modal-overlay" id="pop-up-berita" onclick="tutupPopUp(event)">
+      <div class="modal-konten">
+        <button class="modal-tutup-btn" onclick="tombolTutupPopUp()">✕</button>
+        <div id="pop-up-foto-wadah"></div>
+        <div class="modal-body">
+          <h2 class="modal-judul" id="pop-up-judul"></h2>
+          <div class="modal-tanggal" id="pop-up-tanggal"></div>
+          <p class="modal-isi" id="pop-up-isi"></p>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      const SUPABASE_URL = "https://tjzrsvwckvabnjxcypdz.supabase.co";
+      const SUPABASE_KEY = "sb_publishable_R6o0pLyEmXuqOOB80JnVuA_awEn_qBl";
+      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      // Kita simpan data berita secara global agar gampang diakses pop-up
+      let listBeritaGlobal = [];
+
+      async function ambilBerita() {
+        const { data, error } = await supabaseClient
+          .from("info_berita")
+          .select("*")
+          .order("tanggal_rilis", { ascending: false });
+
+        const container = document.getElementById("konten-berita");
+        const loading = document.getElementById("loading-berita");
+
+        if (loading) loading.style.display = "none";
+
+        if (error) {
+          console.error("Detail Eror Berita:", error);
+          container.innerHTML = `<p style="text-align:center; color:red; grid-column: 1/-1;">Gagal memuat berita.</p>`;
+          return;
+        }
+
+        if (data.length === 0) {
+          container.innerHTML = `<p style="text-align:center; color:#666; grid-column: 1/-1; margin-top: 30px;">Belum ada berita terbaru.</p>`;
+          return;
+        }
+
+        listBeritaGlobal = data; // Masukkan ke variabel global
+
+        container.innerHTML = "";
+        data.forEach((berita, indeks) => {
+          const tgl = new Date(berita.tanggal_rilis).toLocaleDateString(
+            "id-ID",
+            {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            },
+          );
+
+          const komponenGambar = berita.url_gambar
+            ? `<img src="${berita.url_gambar}" class="foto-berita" alt="Foto Kegiatan">`
+            : "";
+
+          // 💡 Saat kartu diklik, jalankan fungsi bukaPopUp() sesuai indeks beritanya
+          const card = `
+                    <div class="card-berita" onclick="bukaPopUp(${indeks})">
+                        ${komponenGambar}
+                        <div class="card-body">
+                            <div>
+                                <h3 class="judul">${berita.judul}</h3>
+                                <div class="tanggal">📅 ${tgl}</div>
+                                <p class="isi">${berita.isi_berita.substring(0, 120)}...</p> 
+                            </div>
+                        </div>
+                    </div>
+                `;
+          container.innerHTML += card;
+        });
+      }
+
+      // 💡 FUNGSI UNTUK MEMBUKA POP-UP DAN MENAMPILKAN DATA DETAILNYA
+      function bukaPopUp(indeks) {
+        const berita = listBeritaGlobal[indeks];
+        const tgl = new Date(berita.tanggal_rilis).toLocaleDateString("id-ID", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+
+        document.getElementById("pop-up-judul").innerText = berita.judul;
+        document.getElementById("pop-up-tanggal").innerText =
+          "📅 Dipublikasikan pada: " + tgl;
+        document.getElementById("pop-up-isi").innerText = berita.isi_berita;
+
+        const fotoWadah = document.getElementById("pop-up-foto-wadah");
+        if (berita.url_gambar) {
+          fotoWadah.innerHTML = `<img src="${berita.url_gambar}" class="modal-foto" alt="Foto Kegiatan">`;
+        } else {
+          fotoWadah.innerHTML = "";
+        }
+
+        document.getElementById("pop-up-berita").classList.add("aktif");
+        document.body.style.overflow = "hidden"; // Mengunci scroll latar belakang agar fokus ke pop-up
+      }
+
+      // FUNGSI UNTUK MENUTUP POP-UP
+      function tombolTutupPopUp() {
+        document.getElementById("pop-up-berita").classList.remove("aktif");
+        document.body.style.overflow = "auto"; // Mengaktifkan scroll kembali
+      }
+
+      function tutupPopUp(event) {
+        // Jika ngeklik di luar kotak putih (di area hitam transparan), pop-up akan tertutup
+        if (event.target.classList.contains("modal-overlay")) {
+          tombolTutupPopUp();
+        }
+      }
+
+      ambilBerita();
+    </script>
+  </body>
+</html>

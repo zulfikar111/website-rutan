@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rutan Kelas IIB Kota Agung</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <!-- CSS inline yang diselaraskan -->
+    <style>
+      /* ==========================================
+   ✨ STYLE TAMBAHAN STRUKTUR PEJABAT (INDEX)
+   ========================================== */
+      .struktur-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+        margin-top: 30px;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .level-1 {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .level-2 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        width: 100%;
+        max-width: 950px;
+      }
+      .pejabat-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        overflow: hidden;
+        border-top: 4px solid #002855;
+        transition: transform 0.2s ease;
+        padding: 20px 10px;
+        text-align: center;
+      }
+      .pejabat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      }
+      .pejabat-foto-frame {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 12px auto;
+        border: 2.5px solid #002855;
+        overflow: hidden;
+        background-color: #eaeded;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .pejabat-foto-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .pejabat-foto-placeholder {
+        font-size: 35px;
+        color: #bbb;
+      }
+      .pejabat-jabatan {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #002855;
+        font-weight: bold;
+        margin-bottom: 4px;
+      }
+      .pejabat-nama {
+        font-size: 15px;
+        color: #222;
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+      .pejabat-nip {
+        font-size: 11px;
+        color: #777;
+      }
+      .pembatas-level {
+        width: 60%;
+        height: 1px;
+        background: #e5e7eb;
+        margin: 5px auto;
+      }
+      .btn-admin {
+        background-color: #4a5568;
+        color: #ffffff;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 14px;
+        margin-left: 10px;
+        transition: background-color 0.3s ease;
+      }
+      .btn-admin:hover {
+        background-color: #2d3748;
+      }
+      .nav-links .admin-mobile {
+        display: none;
+      }
+      @media (max-width: 768px) {
+        .nav-links .admin-mobile {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Bagian Navigasi -->
+    <header class="navbar" id="navbar">
+      <div class="container nav-container">
+        <a href="#" class="logo">Rutan <span>Kota Agung</span></a>
+        <ul class="nav-links">
+          <li><a href="#beranda">Beranda</a></li>
+          <li><a href="#profil">Profil</a></li>
+          <li><a href="#layanan">Layanan Publik</a></li>
+          <li><a href="#kontak">Kontak</a></li>
+          <li>
+            <a
+              href="berita.html"
+              style="
+                margin-left: 15px;
+                color: rgb(0, 0, 0);
+                text-decoration: none;
+              "
+            >
+              Berita Terbaru
+            </a>
+          </li>
+          <!-- Tautan diselaraskan menjadi class "admin-mobile" sesuai CSS di atas -->
+          <li class="admin-mobile">
+            <a href="petugas-ruka.html" style="color: #dc2626">Login Admin</a>
+          </li>
+        </ul>
+
+        <!-- Area Tombol Aksi Kanan (Desktop) -->
+        <div class="nav-actions">
+          <a href="#layanan" class="btn-primary desktop-btn">Daftar Layanan</a>
+          <a href="petugas-ruka.html" class="btn-admin desktop-btn"
+            >Login Admin</a
+          >
+        </div>
+
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Bagian Hero -->
+    <section class="hero" id="beranda">
+      <div class="container hero-container">
+        <div class="hero-text">
+          <span class="badge"
+            >KEMENIMIPAS - Kanwil Direktorat Jenderal Pemasyarakatan
+            Lampung</span
+          >
+          <h1>Selamat Datang di Rutan Kelas IIB Kota Agung</h1>
+          <p>
+            Kami berkomitmen memberikan pelayanan publik yang prima, transparan,
+            dan humanis, serta mewujudkan Pemasyarakatan yang PRIMA
+            (Profesional, Responsif, Integritas, Modern, Akuntabel).
+          </p>
+          <div class="hero-buttons">
+            <a href="#profil" class="btn-primary">Profil Instansi</a>
+            <a href="#layanan" class="btn-secondary">Info Layanan</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="assets/rutan.jpeg" alt="Gedung Institusi" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Bagian Profil -->
+    <section class="profile" id="profil">
+      <!-- START: BAGIAN STRUKTUR ORGANISASI TAMBAHAN -->
+      <div
+        style="
+          margin-top: 50px;
+          padding: 20px 0;
+          border-top: 2px dashed #e5e7eb;
+        "
+      >
+        <h3
+          style="
+            color: #002855;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+          "
+        >
+          STRUKTUR ORGANISASI
+        </h3>
+        <p
+          style="
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 30px;
+          "
+        >
+          Pejabat Struktural Rutan Kelas IIB Kota Agung
+        </p>
+
+        <div class="struktur-wrapper">
+          <!-- 👑 LEVEL 1: KEPALA RUTAN -->
+          <div class="level-1">
+            <div class="pejabat-card" style="max-width: 280px; width: 100%">
+              <div class="pejabat-foto-frame">
+                <!-- Ganti 'assets/karutan.jpg' jika file foto sudah diupload ke GitHub -->
+                <img
+                  src="assets/Karutan.jpg"
+                  alt="Kepala Rutan"
+                  onerror="
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'block';
+                  "
+                />
+                <span class="pejabat-foto-placeholder" style="display: none"
+                  >👤</span
+                >
+              </div>
+              <div class="pejabat-jabatan">Kepala Rutan</div>
+              <div class="pejabat-nama">Indar Laya</div>
+              <div class="pejabat-nip">NIP. 197811302000121001</div>
+            </div>
+          </div>
+
+          <div class="pembatas-level"></div>
+
+          <!-- 👔 LEVEL 2: KEPALA KESATUAN PENGAMANAN & PARA KASUBSI -->
+          <div class="level-2">
+            <!-- Pejabat KPR -->
+            <div class="pejabat-card">
+              <div class="pejabat-foto-frame">
+                <img
+                  src="assets/KPR.jpg"
+                  alt="Kepala KPR"
+                  onerror="
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'block';
+                  "
+                />
+                <span class="pejabat-foto-placeholder" style="display: none"
+                  >👤</span
+                >
+              </div>
+              <div class="pejabat-jabatan">Kepala KPR</div>
+              <div class="pejabat-nama">M.Tera Aprilian</div>
+              <div class="pejabat-nip">NIP. 199604232022011001</div>
+            </div>
+
+            <!-- Kasubsi Pelayanan Tahanan -->
+            <div class="pejabat-card">
+              <div class="pejabat-foto-frame">
+                <img
+                  src="assets/Yantah.jpg"
+                  alt="Kasubsi Pelayanan Tahanan"
+                  onerror="
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'block';
+                  "
+                />
+                <span class="pejabat-foto-placeholder" style="display: none"
+                  >👤</span
+                >
+              </div>
+              <div class="pejabat-jabatan">Kasubsi Pelayanan Tahanan</div>
+              <div class="pejabat-nama">J.M Prameswari</div>
+              <div class="pejabat-nip">NIP. 198705172006042001</div>
+            </div>
+
+            <!-- Kasubsi Pengelolaan -->
+            <div class="pejabat-card">
+              <div class="pejabat-foto-frame">
+                <img
+                  src="assets/Pengelolaan.jpg"
+                  alt="Kasubsi Pengelolaan"
+                  onerror="
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'block';
+                  "
+                />
+                <span class="pejabat-foto-placeholder" style="display: none"
+                  >👤</span
+                >
+              </div>
+              <div class="pejabat-jabatan">Kasubsi Pengelolaan</div>
+              <div class="pejabat-nama">Eko Munandar</div>
+              <div class="pejabat-nip">NIP. 198403272002121001</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END: BAGIAN STRUKTUR ORGANISASI TAMBAHAN -->
+      <div class="container">
+        <div class="profile-content">
+          <div class="profile-text">
+            <h2 class="section-title left-align">Pengabdian Tanpa Batas</h2>
+            <p>
+              Rumah Tahanan Negara Kelas IIB Kota Agung, yang berlokasi di
+              Kabupaten Tanggamus, Provinsi Lampung, merupakan Unit Pelaksana
+              Teknis (UPT) di bawah Kantor Wilayah Direktorat Jenderal
+              Pemasyarakatan Lampung.
+            </p>
+            <p>
+              Yang menjalankan Undang - Undang untuk melaksanakan fungsi
+              pelayanan tahanan, pembinaan narapidana, pengelolaan benda sitaan
+              negara, serta memastikan keamanan dan ketertiban dengan menjunjung
+              tinggi Hak Asasi Manusia (HAM).
+            </p>
+          </div>
+          <div class="profile-stats">
+            <div class="stat-box">
+              <h3>PRIMA</h3>
+              <p>Tata Nilai Utama</p>
+            </div>
+            <div class="stat-box">
+              <h3>WBK</h3>
+              <p>Zona Integritas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bagian Layanan Publik -->
+    <section class="features" id="layanan">
+      <div class="container">
+        <h2 class="section-title">Layanan Publik Rutan</h2>
+        <p class="section-subtitle">
+          Seluruh layanan di Rutan Kelas IIB Kota Agung
+          <strong>TIDAK DIPUNGUT BIAYA (GRATIS)</strong>.
+        </p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="icon">👥</div>
+            <h3>Layanan Kunjungan</h3>
+            <p>
+              Fasilitas pendaftaran kunjungan tatap muka dan video call secara
+              mudah bagi keluarga Warga Binaan.
+            </p>
+            <a href="layanan-kunjungan.html" class="btn-detail"
+              >Lihat Detail &rarr;</a
+            >
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">📦</div>
+            <h3>Penitipan Barang</h3>
+            <p>
+              Layanan penitipan barang dan makanan yang melalui SOP pemeriksaan
+              ketat.
+            </p>
+            <a href="layanan-barang.html" class="btn-detail"
+              >Lihat Detail &rarr;</a
+            >
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">⚖️</div>
+            <h3>Bantuan Hukum</h3>
+            <p>
+              Layanan penyuluhan dan bantuan hukum secara gratis bagi tahanan
+              yang membutuhkan.
+            </p>
+            <a href="layanan-hukum.html" class="btn-detail"
+              >Lihat Detail &rarr;</a
+            >
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">📜</div>
+            <h3>Layanan Integrasi</h3>
+            <p>
+              Pengurusan hak-hak Warga Binaan seperti Pembebasan Bersyarat (PB)
+              dan Cuti Bersyarat (CB).
+            </p>
+            <a href="layanan-integrasi.html" class="btn-detail"
+              >Lihat Detail &rarr;</a
+            >
+          </div>
+
+          <!-- Layanan 5 -->
+          <div class="feature-card">
+            <div class="icon">📝</div>
+            <h3>Izin Luar Biasa</h3>
+            <p>
+              Pengurusan izin keluar Rutan dengan pengawalan untuk keperluan
+              darurat (keluarga inti sakit/meninggal).
+            </p>
+            <a href="layanan-izin.html" class="btn-detail"
+              >Lihat Detail &rarr;</a
+            >
+          </div>
+
+          <div class="feature-card">
+            <div class="icon">📞</div>
+            <h3>Layanan Pengaduan</h3>
+            <p>
+              Kanal aduan masyarakat terkait kinerja dan pelayanan kami.
+              Identitas Anda dirahasiakan.
+            </p>
+            <a href="layanan-pengaduan.html" class="btn-detail"
+              >Lihat Detail &rarr;</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bagian Footer -->
+    <footer id="kontak">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-info">
+            <h3>Rutan<span>KotaAgung</span></h3>
+            <p>
+              Kementerian Imigrasi Dan Pemasyarakatan RI<br />Kantor Wilayah
+              Lampung
+            </p>
+          </div>
+          <div class="footer-contact">
+            <h4>Hubungi Kami</h4>
+            <p>📍 Jl. Bhayangkara, Kota Agung, Kab. Tanggamus, Lampung</p>
+            <p>📞 +62823-7916-1752</p>
+          </div>
+        </div>
+
+        <p class="copyright">
+          &copy; 2026 Rumah Tahanan Negara Kelas IIB Kota Agung. Hak Cipta
+          Dilindungi.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

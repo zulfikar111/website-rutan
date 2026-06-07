@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Penitipan Barang - Rutan Kota Agung</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="navbar" id="navbar">
+      <div class="container nav-container">
+        <a href="index.html" class="logo">Rutan<span>KotaAgung</span></a>
+        <ul class="nav-links">
+          <li><a href="index.html#beranda">Beranda</a></li>
+          <li><a href="index.html#layanan">Layanan Publik</a></li>
+        </ul>
+        <a href="index.html#layanan" class="btn-primary desktop-btn">Kembali</a>
+        <div class="hamburger">
+          <span class="bar"></span><span class="bar"></span
+          ><span class="bar"></span>
+        </div>
+      </div>
+    </header>
+
+    <section class="page-header">
+      <div class="container">
+        <h1>Layanan Penitipan Barang / Makanan</h1>
+        <p>Prosedur penitipan barang bawaan untuk Warga Binaan</p>
+      </div>
+    </section>
+
+    <div class="container mt-5" style="padding: 20px">
+      <h3
+        style="
+          text-align: center;
+          margin-bottom: 20px;
+          font-weight: bold;
+          color: #002855;
+        "
+      >
+        📦 Status Penitipan Barang Terbaru
+      </h3>
+      <div style="overflow-x: auto">
+        <table
+          border="1"
+          style="
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            border: 1px solid #ddd;
+          "
+        >
+          <thead>
+            <tr style="background-color: #0d6efd; color: white">
+              <th style="padding: 12px">Tanggal & Jam</th>
+              <th style="padding: 12px">Pengirim</th>
+              <th style="padding: 12px">Nama Narapidana</th>
+              <th style="padding: 12px">Status</th>
+            </tr>
+          </thead>
+          <tbody id="tabel-barang">
+            <tr>
+              <td
+                colspan="4"
+                style="text-align: center; padding: 15px; color: #666"
+              >
+                Memuat data terbaru...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <section class="page-content">
+      <h2>Ketentuan Makanan/Barang yang Diizinkan</h2>
+      <ul>
+        <li>
+          Makanan matang yang diletakkan dalam wadah transparan (plastik
+          bening).
+        </li>
+        <li>
+          Pakaian maksimal 2 stel (celana pendek dan tidak berbahan jeans) per
+          penitipan.
+        </li>
+        <li>Alat mandi (sabun cair transparan, pasta gigi, dll).</li>
+      </ul>
+
+      <h2>Barang yang DILARANG Keras</h2>
+      <ul>
+        <li>NARKOTIKA, PSIKOTROPIKA, DAN OBAT-OBATAN TERLARANG.</li>
+        <li>Alat komunikasi (Handphone, charger, headset).</li>
+        <li>
+          Senjata tajam, senjata api, atau benda yang terbuat dari besi/kaca.
+        </li>
+        <li>Minuman keras / beralkohol.</li>
+      </ul>
+
+      <h2>Alur Layanan</h2>
+      <ol>
+        <li>
+          Pengunjung mengisi formulir penitipan barang dan menyerahkan KTP atau
+          Identitas lainnya.  
+        </li>
+        <li>
+          Petugas akan menggeledah dan memeriksa barang/makanan dengan teliti
+          (makanan akan dipotong/diurai).
+        </li>
+        <li>
+          Barang yang telah diperiksa dan dinyatakan <i>aman</i> akan di
+          <i>packing</i> kembali dan diberi nama diberikan nama Warga Binaan
+          yangn dituju.
+        </li>
+        <li>Petugas mendistribusikan ke blok hunian.</li>
+      </ol>
+
+      <p>
+        <em
+          >*Seluruh layanan ini
+          <strong>TIDAK DIPUNGUT BIAYA (GRATIS)</strong>.</em
+        >
+      </p>
+      <a href="index.html#layanan" class="btn-secondary back-btn"
+        >&larr; Kembali ke Daftar Layanan</a
+      >
+    </section>
+
+    <footer>
+      <div class="container">
+        <p class="copyright" style="border: none; padding-top: 0">
+          &copy; 2026 Rumah Tahanan Negara Kelas IIB Kota Agung.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      const SUPABASE_URL = "https://tjzrsvwckvabnjxcypdz.supabase.co";
+      const SUPABASE_KEY = "sb_publishable_R6o0pLyEmXuqOOB80JnVuA_awEn_qBl";
+      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      // Format jam dari timetz (contoh: "14:30:00+07" -> "14:30")
+      function formatJam(jamString) {
+        if (!jamString) return "-";
+        // Menghilangkan penanda timezone jika ada, menampilkan waktu bersih jam:menit:detik
+        return jamString.split("+")[0];
+      }
+
+      // Format tanggal + jam jadi satu
+      function formatTanggalJam(tanggal, jam) {
+        if (!tanggal) return "-";
+
+        // Format tanggal ke Indonesia
+        const tgl = new Date(tanggal).toLocaleDateString("id-ID", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        });
+
+        const jamFormatted = formatJam(jam);
+        return `${tgl} • ${jamFormatted}`;
+      }
+
+      // Format status dengan warna
+      function formatStatus(status) {
+        if (
+          status === "Sudah Diserahkan ke Napi" ||
+          status === "Sudah Diserahkan ke Narapidana"
+        ) {
+          return '<span style="background-color: #d1e7dd; color: #0f5132; padding: 4px 8px; border-radius: 4px; font-size: 14px; font-weight: bold;">Selesai</span>';
+        } else if (status === "Diproses / Diperiksa" || status === "Diproses") {
+          return '<span style="background-color: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-size: 14px; font-weight: bold;">Diproses</span>';
+        }
+        return `<span style="background-color: #d1e7dd; color: #0f5132; padding: 4px 8px; border-radius: 4px; font-size: 14px; font-weight: bold;">${status}</span>`;
+      }
+
+      async function ambilDataBarang() {
+        const { data, error } = await supabaseClient
+          .from("info_barang")
+          .select("*")
+          .order("id", { ascending: false });
+
+        const tbody = document.getElementById("tabel-barang");
+        if (!tbody) return;
+        tbody.innerHTML = "";
+
+        if (error) {
+          console.error("Detail Eror Supabase:", error);
+          tbody.innerHTML = `<tr><td colspan="4" style="color:red; text-align:center; padding: 15px;">Gagal memuat data.</td></tr>`;
+          return;
+        }
+
+        if (data.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 15px;">Belum ada info pengiriman barang hari ini.</td></tr>`;
+          return;
+        }
+
+        data.forEach((barang) => {
+          const tglJam = formatTanggalJam(
+            barang.tanggal_diterima,
+            barang.jam, // 👈 Diganti jadi jam agar pas dengan Supabase
+          );
+          const statusFormatted = formatStatus(barang.status);
+          const row = `
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 12px;">${tglJam}</td>
+                    <td style="padding: 12px;">${barang.nama_pengirim || "-"}</td>
+                    <td style="padding: 12px; font-weight: 500;">${barang.nama_napi || "-"}</td>
+                    <td style="padding: 12px;">${statusFormatted}</td>
+                </tr>
+            `;
+          tbody.innerHTML += row;
+        });
+      }
+
+      // Jalankan fungsi
+      ambilDataBarang();
+    </script>
+  </body>
+</html>

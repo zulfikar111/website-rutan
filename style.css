@@ -1,0 +1,488 @@
+:root {
+  --primary-color: #1e3a8a; /* Navy Blue Kemenkumham */
+  --primary-hover: #172554;
+  --accent-color: #d97706; /* Emas/Kuning */
+  --accent-hover: #b45309;
+  --text-dark: #1f2937;
+  --text-light: #4b5563;
+  --bg-light: #f3f4f6;
+  --white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background-color: var(--white);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: var(--white);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--primary-color);
+  text-transform: uppercase;
+}
+.logo span {
+  color: var(--accent-color);
+}
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  align-items: center;
+}
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 600;
+  transition: color 0.3s;
+}
+.nav-links a:hover {
+  color: var(--primary-color);
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* BUTTONS */
+.btn-primary,
+.btn-secondary,
+.btn-admin {
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: 2px solid var(--primary-color);
+}
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+.btn-secondary {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+.btn-secondary:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+/* Tombol Admin Khusus (Warna netral/abu-abu gelap agar kontras dengan tombol primer) */
+.btn-admin {
+  background-color: #374151;
+  color: var(--white);
+  border: 2px solid #374151;
+}
+.btn-admin:hover {
+  background-color: #1f2937;
+  border-color: #1f2937;
+}
+
+/* Utilitas untuk menampilkan elemen khusus mobile */
+.mobile-only {
+  display: none;
+}
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+.bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  transition: all 0.3s ease;
+  background-color: var(--text-dark);
+}
+
+/* HERO */
+.hero {
+  padding: 160px 0 100px;
+  background: linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%);
+}
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+.hero-text {
+  flex: 1;
+}
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: rgba(30, 58, 138, 0.1);
+  color: var(--primary-color);
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.hero-text h1 {
+  font-size: 44px;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+.hero-text p {
+  font-size: 18px;
+  color: var(--text-light);
+  margin-bottom: 30px;
+}
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+}
+.hero-image {
+  flex: 1;
+}
+.hero-image img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(30, 58, 138, 0.15);
+  border: 4px solid var(--white);
+}
+
+/* PROFILE */
+.profile {
+  padding: 80px 0;
+  background-color: var(--white);
+}
+.profile-content {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+}
+.profile-text {
+  flex: 2;
+}
+.profile-text p {
+  margin-bottom: 15px;
+  color: var(--text-light);
+  font-size: 17px;
+}
+.profile-stats {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.stat-box {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  border-left: 6px solid var(--accent-color);
+}
+.stat-box h3 {
+  font-size: 32px;
+  margin-bottom: 5px;
+}
+.stat-box p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* FEATURES/LAYANAN */
+.features {
+  padding: 100px 0;
+  background-color: var(--bg-light);
+}
+.section-title {
+  text-align: center;
+  font-size: 36px;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+.section-title.left-align {
+  text-align: left;
+  margin-bottom: 20px;
+}
+.section-subtitle {
+  text-align: center;
+  color: var(--text-light);
+  margin-bottom: 50px;
+  font-size: 18px;
+}
+.section-subtitle strong {
+  color: #dc2626;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+.feature-card {
+  background-color: var(--white);
+  padding: 40px 30px;
+  border-radius: 12px;
+  border-top: 4px solid var(--accent-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+.feature-card:hover {
+  transform: translateY(-10px);
+}
+.feature-card .icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+.feature-card h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+.feature-card p {
+  color: var(--text-light);
+  font-size: 15px;
+}
+
+/* HALAMAN DETAIL CSS */
+.btn-detail {
+  display: inline-block;
+  margin-top: 15px;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+.btn-detail:hover {
+  color: var(--accent-hover);
+}
+.page-header {
+  padding: 140px 0 60px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  text-align: center;
+  border-bottom: 5px solid var(--accent-color);
+}
+.page-header h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+.page-header p {
+  color: #d1d5db;
+  font-size: 18px;
+}
+.page-content {
+  padding: 60px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: var(--white);
+}
+.page-content h2 {
+  color: var(--primary-color);
+  margin: 30px 0 15px;
+  font-size: 24px;
+  border-bottom: 2px solid var(--bg-light);
+  padding-bottom: 10px;
+}
+.page-content p {
+  color: var(--text-light);
+  margin-bottom: 15px;
+}
+.page-content ul,
+.page-content ol {
+  margin-bottom: 20px;
+  padding-left: 20px;
+  color: var(--text-light);
+}
+.page-content li {
+  margin-bottom: 10px;
+}
+.back-btn {
+  margin-top: 40px;
+}
+
+/* FOOTER */
+footer {
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 60px 0 30px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.footer-info h3 {
+  font-size: 24px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+.footer-info h3 span {
+  color: var(--accent-color);
+}
+.footer-info p {
+  color: #d1d5db;
+}
+.footer-contact h4 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: var(--accent-color);
+}
+.footer-contact p {
+  color: #d1d5db;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+.copyright {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    left: -100%;
+    top: 80px;
+    flex-direction: column;
+    background-color: var(--white);
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px 0;
+  }
+  .nav-links.active {
+    left: 0;
+  }
+  .hamburger {
+    display: block;
+  }
+  .desktop-btn {
+    display: none;
+  }
+
+  /* Menampilkan menu login admin di mobile */
+  .mobile-only {
+    display: block;
+  }
+
+  /* Perbaikan Bagian Hero untuk Ponsel */
+  .hero {
+    padding: 120px 0 60px 0;
+  }
+  .hero-container {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 30px;
+  }
+  .hero-text,
+  .hero-image {
+    width: 100%;
+  }
+  .hero-text h1 {
+    font-size: 28px;
+  }
+  .hero-text p {
+    font-size: 16px;
+    margin-bottom: 25px;
+  }
+  .hero-buttons {
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .hero-buttons a {
+    width: 100%;
+    text-align: center;
+  }
+  .hero-image img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Perbaikan Profil & Footer Grid untuk Ponsel */
+  .profile-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+  .profile-text {
+    width: 100%;
+  }
+  .profile-stats {
+    width: 100%;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 30px;
+  }
+  .section-title.left-align {
+    text-align: center;
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .btn-admin {
+    background-color: #4a5568;
+    color: #ffffff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+  }
+  .btn-admin:hover {
+    background-color: #2d3748;
+  }
+  .nav-links .admin-mobile {
+    display: none;
+  }
+  @media (max-width: 768px) {
+    .nav-links .admin-mobile {
+      display: block;
+    }
+  }
+}

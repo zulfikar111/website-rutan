@@ -1,0 +1,894 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel Admin - Rutan Kota Agung</title>
+    <link rel="stylesheet" href="style-admin.css" />
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <!-- HALAMAN LOGIN -->
+      <div
+        id="halaman-login"
+        class="login-card"
+        style="max-width: 420px; margin: 80px auto; display: none"
+      >
+        <div class="login-header">
+          <div class="login-icon-shield">
+            <img src="assets/logo.png" alt="" />
+          </div>
+          <h2>Login Petugas</h2>
+          <p>Rutan Kelas IIB Kota Agung</p>
+        </div>
+        <form id="formLogin">
+          <div class="form-group-custom">
+            <label for="loginEmail">Email Resmi</label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">✉️</span>
+              <input
+                type="email"
+                id="loginEmail"
+                class="form-input-custom"
+                placeholder="nama@kemenkumham.go.id"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group-custom">
+            <label for="loginPassword">Kata Sandi</label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon">🔐</span>
+              <input
+                type="password"
+                id="loginPassword"
+                class="form-input-custom"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+          </div>
+          <button type="submit" id="btnLogin" class="btn-login-custom">
+            Masuk ke Sistem
+          </button>
+        </form>
+        <div class="login-footer-text">
+          ⚠️ <strong>Sistem Terbuka Terbatas.</strong><br />Akses hanya
+          diizinkan untuk petugas Rutan Kota Agung yang berwenang.
+        </div>
+      </div>
+
+      <!-- HALAMAN PANEL ADMIN -->
+      <div id="halaman-admin" style="display: none">
+        <div
+          class="navbar-admin"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <span id="navbar-title">🛡️ PANEL ADMIN RUTAN KOTA AGUNG</span>
+          <button class="btn-logout" onclick="aksiLogout()">🚪 Keluar</button>
+        </div>
+
+        <!-- FORM TAMBAH AKUN -->
+        <div
+          class="card-form"
+          id="form-tambah-admin"
+          style="border-left: 5px solid #28a745"
+        >
+          <h3>🔑 Tambah Akun Petugas Rutan Baru</h3>
+          <p style="font-size: 13px; color: #666; margin-bottom: 15px">
+            Gunakan formulir ini untuk mendaftarkan akun petugas baru.
+          </p>
+          <form id="formTambahAdmin">
+            <div class="form-group">
+              <input
+                type="email"
+                id="regEmail"
+                class="form-control"
+                placeholder="Email Resmi Calon Petugas"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="regRole">Pilih Jabatan</label>
+              <select id="regRole" class="form-control" required>
+                <option value="">-- Pilih Jabatan --</option>
+                <option value="admin">Administrator (Akses Penuh)</option>
+                <option value="operator">Operator (Input Barang Saja)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                id="regPassword"
+                class="form-control"
+                placeholder="Password Baru (Minimal 6 Karakter)"
+                minlength="6"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              id="btnTambahAdmin"
+              class="btn-submit btn-green"
+              style="background-color: #28a745; border-color: #28a745"
+            >
+              ➕ Daftarkan Petugas Baru
+            </button>
+          </form>
+        </div>
+
+        <!-- FORM INPUT BARANG -->
+        <div class="card-form">
+          <h3>Input Bukti Serah Terima Barang (WA Otomatis)</h3>
+          <form id="formBarang">
+            <div class="form-group">
+              <input
+                type="text"
+                id="namaNapi"
+                class="form-control"
+                placeholder="Nama Warga Binaan"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                id="namaPengirim"
+                class="form-control"
+                placeholder="Nama Pengirim / Keluarga"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                id="idKtpPengirim"
+                class="form-control"
+                placeholder="Nomor ID / KTP Pengirim"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="tel"
+                id="noWaKeluarga"
+                class="form-control"
+                placeholder="No WhatsApp Keluarga (Contoh: 08123456xxx)"
+                required
+              />
+              <small
+                >*Pastikan nomor aktif agar notifikasi WA berhasil
+                terkirim</small
+              >
+            </div>
+            <div class="form-group">
+              <textarea
+                id="daftarBarangBawaan"
+                class="form-control"
+                placeholder="Daftar barang apa saja yang dibawa (Contoh: 1 Baju, Roti, Kopi)..."
+                rows="3"
+                required
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label
+                style="
+                  font-weight: 500;
+                  display: block;
+                  margin-bottom: 5px;
+                  font-size: 14px;
+                  color: #333;
+                "
+              >
+                Foto Bukti Penerimaan Barang oleh Warga Binaan:
+              </label>
+              <input
+                type="file"
+                id="fotoBuktiBarang"
+                class="form-control"
+                accept="image/*"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              id="btnKirimBarang"
+              class="btn-submit btn-blue"
+            >
+              🚀 Simpan & Kirim WhatsApp
+            </button>
+          </form>
+        </div>
+
+        <!-- FORM INPUT BERITA -->
+        <div class="card-form" id="form-berita">
+          <h3>📰 Input Berita Rutan Terbaru</h3>
+          <form id="formNewsletter">
+            <div class="form-group">
+              <input
+                type="text"
+                id="judulNewsletter"
+                class="form-control"
+                placeholder="Judul Berita Terbaru"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label
+                style="
+                  font-weight: 500;
+                  display: block;
+                  margin-bottom: 5px;
+                  font-size: 14px;
+                  color: #333;
+                "
+                >Upload Foto:</label
+              >
+              <input
+                type="file"
+                id="fileGambarNewsletter"
+                class="form-control"
+                accept="image/*"
+              />
+            </div>
+            <div class="form-group">
+              <textarea
+                id="isiNewsletter"
+                class="form-control"
+                placeholder="Tulis isi berita lengkap di sini..."
+                rows="5"
+                required
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              id="btnKirimNewsletter"
+              class="btn-submit btn-green"
+            >
+              Publikasikan Berita
+            </button>
+          </form>
+        </div>
+
+        <!-- TABEL BARANG -->
+        <div class="card-form">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 15px;
+            "
+          >
+            <h3 style="font-size: 18px; margin: 0">
+              📋 Histori Pengiriman Barang
+            </h3>
+            <button
+              type="button"
+              id="btn-hapus-massal"
+              onclick="hapusBarangTerpilih()"
+              style="
+                background-color: #dc3545;
+                color: white;
+                border: none;
+                padding: 8px 14px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 13px;
+              "
+            >
+              🗑️ Hapus yang Dipilih
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr style="background-color: #f8f9fa">
+                  <th style="padding: 10px; width: 40px; text-align: center">
+                    <input
+                      type="checkbox"
+                      id="pilih-semua"
+                      onclick="togglePilihSemua(this)"
+                      style="transform: scale(1.2); cursor: pointer"
+                    />
+                  </th>
+                  <th style="padding: 10px">Tanggal/Jam</th>
+                  <th style="padding: 10px">Pengirim</th>
+                  <th style="padding: 10px">ID / KTP</th>
+                  <th style="padding: 10px">Nama Napi</th>
+                  <th style="padding: 10px">Barang Bawaan</th>
+                  <th style="padding: 10px">WA Keluarga</th>
+                  <th style="padding: 10px">Status</th>
+                  <th style="padding: 10px; text-align: center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tabel-admin-barcode">
+                <tr>
+                  <td
+                    colspan="9"
+                    style="text-align: center; color: #666; padding: 15px"
+                  >
+                    Memuat data...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABEL BERITA -->
+        <div class="card-form" id="tabel-kelola-berita">
+          <h3 style="font-size: 18px">📰 Kelola & Hapus Berita</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Judul Berita</th>
+                  <th>Tanggal Rilis</th>
+                  <th style="text-align: center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tabel-admin-berita">
+                <tr>
+                  <td
+                    colspan="3"
+                    style="text-align: center; color: #666; padding: 15px"
+                  >
+                    Memuat berita...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      var SUPABASE_URL = "https://tjzrsvwckvabnjxcypdz.supabase.co";
+      var SUPABASE_KEY = "sb_publishable_R6o0pLyEmXuqOOB80JnVuA_awEn_qBl";
+
+      var supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false,
+        },
+      });
+      var supabaseRegisterClient = supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY,
+        {
+          auth: {
+            persistSession: false,
+            autoRefreshToken: false,
+            detectSessionInUrl: false,
+          },
+        },
+      );
+
+      document.addEventListener("DOMContentLoaded", function () {
+        cekStatusSesi();
+      });
+
+      async function cekStatusSesi() {
+        try {
+          var result = await supabaseClient.auth.getUser();
+          if (result.data.user) {
+            var userRole = result.data.user.user_metadata.role || "admin";
+            tampilkanHalamanAdmin(userRole);
+
+            // Jalankan muat data secara bersamaan
+            muatDataAdminBarang();
+            muatDataAdminBerita();
+          } else {
+            document.getElementById("halaman-login").style.display = "block";
+            document.getElementById("halaman-admin").style.display = "none";
+          }
+        } catch (err) {
+          document.getElementById("halaman-login").style.display = "block";
+          document.getElementById("halaman-admin").style.display = "none";
+        }
+      }
+
+      function tampilkanHalamanAdmin(role) {
+        if (role === "operator") {
+          // ❌ SEMBUNYIKAN: form tambah akun, form berita, tabel berita
+          document.getElementById("form-tambah-admin").style.display = "none";
+          document.getElementById("form-berita").style.display = "none";
+          document.getElementById("tabel-kelola-berita").style.display = "none";
+          document.getElementById("navbar-title").textContent =
+            "🛡️ PANEL OPERATOR RUTAN KOTA AGUNG";
+
+          // ✅ TIDAK ADA kode menyembunyikan btn-hapus-massal!
+          // ✅ Operator tetap bisa lihat tabel barang dan hapus data
+        } else {
+          // ADMIN: Tampilkan semua
+          document.getElementById("form-tambah-admin").style.display = "block";
+          document.getElementById("form-berita").style.display = "block";
+          document.getElementById("tabel-kelola-berita").style.display =
+            "block";
+          document.getElementById("navbar-title").textContent =
+            "🛡️ PANEL ADMIN RUTAN KOTA AGUNG";
+          // ✅ btn-hapus-massal tetap tampil
+        }
+        document.getElementById("halaman-login").style.display = "none";
+        document.getElementById("halaman-admin").style.display = "block";
+      }
+
+      document
+        .getElementById("formLogin")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          var btn = document.getElementById("btnLogin");
+          btn.innerText = "⏳ Memverifikasi...";
+          btn.disabled = true;
+          var email = document.getElementById("loginEmail").value;
+          var password = document.getElementById("loginPassword").value;
+          supabaseClient.auth
+            .signInWithPassword({ email: email, password: password })
+            .then(function (result) {
+              btn.innerText = "Masuk ke Sistem";
+              btn.disabled = false;
+              if (result.error) {
+                alert("❌ Gagal Masuk: " + result.error.message);
+              } else {
+                var userRole = result.data.user.user_metadata.role || "admin";
+                alert(
+                  "🔑 Berhasil masuk sebagai " +
+                    (userRole === "admin" ? "Administrator" : "Operator") +
+                    "!",
+                );
+                document.getElementById("formLogin").reset();
+                tampilkanHalamanAdmin(userRole);
+                muatDataAdminBarang();
+                muatDataAdminBerita();
+              }
+            });
+        });
+
+      document
+        .getElementById("formTambahAdmin")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          var btn = document.getElementById("btnTambahAdmin");
+          btn.innerText = "⏳ Mendaftarkan...";
+          btn.disabled = true;
+          var email = document.getElementById("regEmail").value;
+          var password = document.getElementById("regPassword").value;
+          var role = document.getElementById("regRole").value;
+          supabaseRegisterClient.auth
+            .signUp({
+              email: email,
+              password: password,
+              options: { data: { role: role } },
+            })
+            .then(function (result) {
+              btn.innerText = "➕ Daftarkan Petugas Baru";
+              btn.disabled = false;
+              if (result.error) {
+                alert("❌ Gagal: " + result.error.message);
+              } else {
+                alert("🎉 Sukses!\nEmail: " + email);
+                document.getElementById("formTambahAdmin").reset();
+              }
+            });
+        });
+
+      function aksiLogout() {
+        if (confirm("Keluar dari panel admin?")) {
+          supabaseClient.auth.signOut().then(function () {
+            window.location.reload();
+          });
+        }
+      }
+
+      function togglePilihSemua(master) {
+        var checkboxes = document.querySelectorAll(".cb-data");
+        for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].checked = master.checked;
+        }
+      }
+
+      function hapusBarangTerpilih() {
+        var checkboxesTerpilih = document.querySelectorAll(".cb-data:checked");
+        if (checkboxesTerpilih.length === 0) {
+          alert("❌ Centang data dulu!");
+          return;
+        }
+        var daftarId = [];
+        for (var i = 0; i < checkboxesTerpilih.length; i++) {
+          daftarId.push(checkboxesTerpilih[i].value);
+        }
+        if (!confirm("Hapus " + daftarId.length + " data?")) return;
+        supabaseClient
+          .from("info_barang")
+          .delete()
+          .in("id", daftarId)
+          .then(function (result) {
+            if (result.error) {
+              alert("Gagal: " + result.error.message);
+            } else {
+              alert("🗑️ Terhapus!");
+              document.getElementById("pilih-semua").checked = false;
+              muatDataAdminBarang();
+            }
+          });
+      }
+
+      function muatDataAdminBarang() {
+        var tbody = document.getElementById("tabel-admin-barcode");
+        if (!tbody) return;
+        supabaseClient
+          .from("info_barang")
+          .select("*")
+          .then(function (result) {
+            if (result.error) {
+              tbody.innerHTML =
+                '<tr><td colspan="7" style="text-align:center; padding: 15px; color: red;">Gagal.</td></tr>';
+              return;
+            }
+            if (!result.data || result.data.length === 0) {
+              tbody.innerHTML =
+                '<tr><td colspan="7" style="text-align:center; padding: 15px; color: #666;">Belum ada data.</td></tr>';
+              return;
+            }
+            result.data.sort(function (a, b) {
+              return (
+                new Date(b.tanggal_diterima) - new Date(a.tanggal_diterima)
+              );
+            });
+            var html = "";
+            for (var i = 0; i < result.data.length; i++) {
+              var b = result.data[i];
+              html += '<tr style="border-bottom: 1px solid #eee;">';
+              html +=
+                '<td style="padding: 10px; text-align: center;"><input type="checkbox" class="cb-data" value="' +
+                b.id +
+                '" style="transform: scale(1.2);"></td>';
+              html +=
+                '<td style="padding: 10px;">' +
+                (b.tanggal_diterima || "-") +
+                '<br><small style="color:#666">' +
+                (b.jam_diterima || "-") +
+                "</small></td>";
+              html +=
+                '<td style="padding: 10px;">' +
+                (b.nama_pengirim || "-") +
+                "</td>";
+              html +=
+                '<td style="padding: 10px; font-weight: bold;">' +
+                (b.nama_napi || "-") +
+                "</td>";
+              html +=
+                '<td style="padding: 10px;">' +
+                (b.no_wa_keluarga || "-") +
+                "</td>";
+              html +=
+                '<td style="padding: 10px;"><span style="background-color: #d1e7dd; color: #0f5132; padding: 4px 8px; border-radius: 4px; font-size: 13px; font-weight: bold;">Selesai</span></td>';
+              html +=
+                '<td style="padding: 10px; text-align: center;"><button onclick="hapusBarang(\'' +
+                b.id +
+                "', '" +
+                (b.nama_napi || "") +
+                '\')" style="background-color: #ffc107; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">Hapus</button></td>';
+              html += "</tr>";
+            }
+            tbody.innerHTML = html;
+          });
+      }
+
+      // ==========================================
+      // INPUT BARANG + KIRIM WA (PAKAI ASYNC/AWAIT)
+      // ==========================================
+      const formBarang = document.getElementById("formBarang");
+      formBarang.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const btn = document.getElementById("btnKirimBarang");
+        btn.innerText = "⏳ Mengunggah Foto Bukti...";
+        btn.disabled = true;
+
+        const nama_napi = document.getElementById("namaNapi").value;
+        const nama_pengirim = document.getElementById("namaPengirim").value;
+        const id_ktp = document.getElementById("idKtpPengirim").value; // 🟢 Ambil nilai KTP
+        const daftar_barang =
+          document.getElementById("daftarBarangBawaan").value; // 🟢 Ambil nilai Barang
+        let no_wa = document.getElementById("noWaKeluarga").value.trim();
+        const fileInput = document.getElementById("fotoBuktiBarang");
+
+        const waktuSekarang = new Date();
+        const tanggal_diterima = waktuSekarang.toISOString().split("T")[0];
+        const jam = waktuSekarang.toTimeString().split(" ")[0];
+
+        if (no_wa.startsWith("0")) {
+          no_wa = "62" + no_wa.slice(1);
+        }
+
+        const file = fileInput.files[0];
+        const namaFileUnik = `bukti_${Date.now()}_${file.name.replace(/\s+/g, "_")}`;
+
+        const { data: uploadData, error: uploadError } =
+          await supabaseClient.storage
+            .from("bukti_barang")
+            .upload(namaFileUnik, file);
+
+        if (uploadError) {
+          alert("Gagal mengupload foto: " + uploadError.message);
+          btn.innerText = "🚀 Simpan & Kirim WhatsApp";
+          btn.disabled = false;
+          return;
+        }
+
+        const { data: linkData } = supabaseClient.storage
+          .from("bukti_barang")
+          .getPublicUrl(namaFileUnik);
+        const foto_bukti = linkData.publicUrl;
+
+        btn.innerText = "⏳ Mencatat ke Database...";
+
+        // 🟢 MASUKKAN KOLOM BARU KE SUPABASE
+        // Pastikan Anda sudah membuat kolom 'id_ktp' dan 'daftar_barang' di tabel 'info_barang' Supabase Anda
+        const { error: insertError } = await supabaseClient
+          .from("info_barang")
+          .insert([
+            {
+              nama_pengirim,
+              id_ktp, // 🟢 Simpan KTP
+              daftar_barang, // 🟢 Simpan Daftar Barang
+              nama_napi,
+              status: "Sudah Diserahkan ke Napi",
+              tanggal_diterima,
+              jam: jam,
+              no_wa_keluarga: no_wa,
+              foto_bukti,
+            },
+          ]);
+
+        btn.innerText = "🚀 Simpan & Kirim WhatsApp";
+        btn.disabled = false;
+
+        if (insertError) {
+          alert("Gagal menyimpan ke database: " + insertError.message);
+        } else {
+          // 🟢 Modifikasi isi teks WA agar menyertakan info barang bawaan
+          const isiPesan = `Halo Bapak/Ibu, pemberitahuan resmi dari *Rutan Kelas IIB Kota Agung*.\n\nBarang titipan Anda yang dikirim oleh *${nama_pengirim}* (ID/KTP: ${id_ktp}) *SUDAH DITERIMA* oleh warga binaan atas nama *${nama_napi}* pada jam *${jam}*.\n\n*Detail Barang Bawaan:* \n${daftar_barang}\n\nBerikut terlampir foto bukti serah terima langsung:\n${foto_bukti}\n\nTerima kasih.`;
+          const urlWhatsapp = `https://api.whatsapp.com/send?phone=${no_wa}&text=${encodeURIComponent(isiPesan)}`;
+
+          btn.style.backgroundColor = "#28a745";
+          btn.innerHTML = `<a href="${urlWhatsapp}" target="_blank" style="color:white; text-decoration:none; display:block; width:100%; height:100%;">✅ SUKSES! KLIK DI SINI UNTUK KIRIM WA</a>`;
+
+          alert("🎉 Data Berhasil Disimpan!");
+          formBarang.reset();
+          muatDataAdminBarang();
+        }
+      });
+
+      function hapusBarang(id, namaNapi) {
+        if (!confirm("Hapus " + namaNapi + "?")) return;
+        supabaseClient
+          .from("info_barang")
+          .delete()
+          .eq("id", id)
+          .then(function (result) {
+            if (result.error) {
+              alert(result.error.message);
+            } else {
+              alert("🗑️ Terhapus");
+              muatDataAdminBarang();
+            }
+          });
+      }
+
+      // ==========================================
+      // KELOLA BERITA
+      // ==========================================
+      function muatDataAdminBarang() {
+        var tbody = document.getElementById("tabel-admin-barcode");
+        if (!tbody) return;
+        supabaseClient
+          .from("info_barang")
+          .select("*")
+          .then(function (result) {
+            if (result.error) {
+              // 🟢 Colspan diubah menjadi 9 karena jumlah kolom bertambah
+              tbody.innerHTML =
+                '<tr><td colspan="9" style="text-align:center; padding: 15px; color: red;">Gagal memuat data.</td></tr>';
+              return;
+            }
+            if (!result.data || result.data.length === 0) {
+              // 🟢 Colspan diubah menjadi 9
+              tbody.innerHTML =
+                '<tr><td colspan="9" style="text-align:center; padding: 15px; color: #666;">Belum ada data pengiriman barang.</td></tr>';
+              return;
+            }
+            result.data.sort(function (a, b) {
+              return (
+                new Date(b.tanggal_diterima) - new Date(a.tanggal_diterima)
+              );
+            });
+            var html = "";
+            for (var i = 0; i < result.data.length; i++) {
+              var b = result.data[i];
+              html +=
+                '<tr style="border-bottom: 1px solid #eee; vertical-align: top;">';
+              html +=
+                '<td style="padding: 10px; text-align: center;"><input type="checkbox" class="cb-data" value="' +
+                b.id +
+                '" style="transform: scale(1.2);"></td>';
+              html +=
+                '<td style="padding: 10px;">' +
+                (b.tanggal_diterima || "-") +
+                '<br><small style="color:#666">' +
+                (b.jam || b.jam_diterima || "-") +
+                "</small></td>";
+              html +=
+                '<td style="padding: 10px;">' +
+                (b.nama_pengirim || "-") +
+                "</td>";
+
+              // 🟢 KOLOM BARU: Tampilkan ID / KTP Pengirim
+              html +=
+                '<td style="padding: 10px; font-family: monospace; color: #555;">' +
+                (b.id_ktp || "-") +
+                "</td>";
+
+              html +=
+                '<td style="padding: 10px; font-weight: bold;">' +
+                (b.nama_napi || "-") +
+                "</td>";
+
+              // 🟢 KOLOM BARU: Tampilkan Daftar Barang Bawaan (dengan gaya teks rapi)
+              html +=
+                '<td style="padding: 10px; font-size: 13px; color: #444; max-width: 200px; word-wrap: break-word; white-space: pre-line;">' +
+                (b.daftar_barang || "-") +
+                "</td>";
+
+              html +=
+                '<td style="padding: 10px;">' +
+                (b.no_wa_keluarga || "-") +
+                "</td>";
+              html +=
+                '<td style="padding: 10px;"><span style="background-color: #d1e7dd; color: #0f5132; padding: 4px 8px; border-radius: 4px; font-size: 13px; font-weight: bold;">Selesai</span></td>';
+              html +=
+                '<td style="padding: 10px; text-align: center;"><button onclick="hapusBarang(\'' +
+                b.id +
+                "', '" +
+                (b.nama_napi || "") +
+                '\')" style="background-color: #ffc107; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">Hapus</button></td>';
+              html += "</tr>";
+            }
+            tbody.innerHTML = html;
+          });
+      }
+      // ==========================================
+      // KELOLA BERITA & AMBIL DATA BERITA
+      // ==========================================
+      function muatDataAdminBerita() {
+        var tbody = document.getElementById("tabel-admin-berita");
+        if (!tbody) return;
+        supabaseClient
+          .from("info_berita")
+          .select("*")
+          .order("tanggal_rilis", { ascending: false })
+          .then(function (result) {
+            if (result.error || !result.data || result.data.length === 0) {
+              tbody.innerHTML =
+                '<tr><td colspan="3" style="text-align:center; padding: 15px; color: #666;">Belum ada berita.</td></tr>';
+              return;
+            }
+            var html = "";
+            for (var i = 0; i < result.data.length; i++) {
+              var n = result.data[i];
+              var tgl = new Date(n.tanggal_rilis).toLocaleDateString("id-ID", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              });
+              html += "<tr>";
+              html += '<td style="font-weight: 500;">' + n.judul + "</td>";
+              html += '<td style="color: #555;">📅 ' + tgl + "</td>";
+              html +=
+                '<td style="text-align: center;"><button onclick="hapusNewsletter(\'' +
+                n.judul +
+                '\')" style="background:#dc3545; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Hapus</button></td>';
+              html += "</tr>";
+            }
+            tbody.innerHTML = html;
+          });
+      }
+
+      function hapusNewsletter(judul) {
+        if (!confirm('Hapus "' + judul + '"?')) return;
+        supabaseClient
+          .from("info_berita")
+          .delete()
+          .eq("judul", judul)
+          .then(function (result) {
+            if (result.error) {
+              alert(result.error.message);
+            } else {
+              alert("🗑️ Terhapus");
+              muatDataAdminBerita();
+            }
+          });
+      }
+
+      // ==========================================
+      // 🟢 KEMBALIKAN: PROSES SUBMIT FORM NEWSLETTER (BERITA)
+      // ==========================================
+      const formNewsletter = document.getElementById("formNewsletter");
+      if (formNewsletter) {
+        formNewsletter.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          var btn = document.getElementById("btnKirimNewsletter");
+          btn.innerText = "⏳ Memproses...";
+          btn.disabled = true;
+
+          try {
+            var fileInput = document.getElementById("fileGambarNewsletter");
+            var linkGambarFinal = "";
+
+            if (fileInput && fileInput.files.length > 0) {
+              var file = fileInput.files[0];
+              var namaFileUnik =
+                Date.now() + "_" + file.name.replace(/\s+/g, "_");
+
+              var uploadResult = await supabaseClient.storage
+                .from("foto_berita")
+                .upload(namaFileUnik, file);
+
+              if (uploadResult.error) {
+                throw new Error(
+                  "Gagal Upload Storage: " + uploadResult.error.message,
+                );
+              }
+
+              var linkData = supabaseClient.storage
+                .from("foto_berita")
+                .getPublicUrl(namaFileUnik);
+
+              if (linkData && linkData.data) {
+                linkGambarFinal = linkData.data.publicUrl;
+              } else if (linkData) {
+                linkGambarFinal = linkData.publicUrl;
+              }
+            }
+
+            var insertResult = await supabaseClient.from("info_berita").insert([
+              {
+                judul: document.getElementById("judulNewsletter").value,
+                url_gambar: linkGambarFinal,
+                isi_berita: document.getElementById("isiNewsletter").value,
+                tanggal_rilis: new Date().toISOString().split("T")[0],
+              },
+            ]);
+
+            if (insertResult.error) {
+              throw new Error(
+                "Gagal menyimpan ke database: " + insertResult.error.message,
+              );
+            }
+
+            alert("📢 Berhasil mempublikasikan berita baru!");
+            formNewsletter.reset();
+            muatDataAdminBerita();
+          } catch (error) {
+            alert("❌ Terjadi Kesalahan: " + error.message);
+            console.error("Detail Error:", error);
+          } finally {
+            btn.innerText = "Publikasikan Berita";
+            btn.disabled = false;
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
